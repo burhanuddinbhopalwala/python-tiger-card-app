@@ -53,4 +53,6 @@ The outputs can be realize as follows:
 
 2: Coverage can be analyze as: [here](./tests/results/coverage.xml) -> `/tests/results/coverage.xml`
 
+> TODO: Safety and Dependency checks since pre-commit is not configured.
+
 ## Feedback
