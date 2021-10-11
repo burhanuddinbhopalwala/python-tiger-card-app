@@ -16,7 +16,7 @@ Tiger Card App serves 2 use cases as of now of calculating daily & weekly fares 
 
 `WeeklyFareCalculator (Child class)`: src/fare_calculators/weekly_fare_calucator.py
 
-## Paradigm & Implementation Details
+## UML Paradigm & Implementation Details
 
 ![details](./implementation_details.png)
 
