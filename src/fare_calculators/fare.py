@@ -20,8 +20,8 @@ class Fare(object):
             # * Zone.x : [non_peak_price - 0, peak_price - 1, day_capping - 2, weekly_capping - 3]
             Zone.one.value: [25, 30, 100, 500],
             Zone.two.value: [20, 25, 120, 400],
-            # * Cross zones price
-            Zone.one.value * 10 + Zone.two.value: [20, 25, 80, 600]
+            # * Cross zones prices based on zipcode
+            Zone.one.value * 1000 + Zone.two.value: [20, 25, 80, 600]
         }
 
         self.DEFAULT_CAPPING_FARE = 5

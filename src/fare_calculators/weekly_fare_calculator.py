@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 from .fare import Fare
+from ..zone import ZipCode
 from utils.logger import logger
 from ..journey import WeeklyJourney
 
@@ -43,17 +44,15 @@ class WeeklyFareCalculator(Fare):
                 else:
                     return total_fare + day_final_fare
             else:
-                cross_zone_1 = from_z * 10 + to_z  # * 12
-                cross_zone_2 = to_z * 10 + from_z  # * 21
-                cross_zone = min(cross_zone_1, cross_zone_2)  # * 12
+                zipcode = ZipCode().get_journey_zipcode(from_z, to_z)
 
                 # * Check for daily capping
-                if day_fare > self.zone_price[cross_zone][self.CAPTURE_DAY_CAPPING]:
-                    day_final_fare = self.zone_price[from_z][self.CAPTURE_DAY_CAPPING]
+                if day_fare > self.zone_price[zipcode][self.CAPTURE_DAY_CAPPING]:
+                    day_final_fare = self.zone_price[zipcode][self.CAPTURE_DAY_CAPPING]
                 day_final_fare = day_fare
 
-                if total_fare + day_final_fare > self.zone_price[cross_zone][self.CAPTURE_WEEKLY_CAPPING]:
-                    return self.zone_price[cross_zone][self.CAPTURE_WEEKLY_CAPPING]
+                if total_fare + day_final_fare > self.zone_price[zipcode][self.CAPTURE_WEEKLY_CAPPING]:
+                    return self.zone_price[zipcode][self.CAPTURE_WEEKLY_CAPPING]
                 else:
                     return total_fare + day_final_fare
         except Exception as error:
@@ -71,9 +70,3 @@ class WeeklyFareCalculator(Fare):
         except Exception as error:
             logger.exception(error)
             raise error
-
-
-if __name__ == '__main__':
-    fc = FareCalculator()
-    fc.get_day_fare([['Monday', 10.45, 1, 1], ['Saturday',
-                                               16.15, 1, 2], ['Sunday', 18.15, 2, 1]])
