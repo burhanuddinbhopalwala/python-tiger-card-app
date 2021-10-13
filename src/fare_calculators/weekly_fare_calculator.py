@@ -4,6 +4,7 @@ from .fare import Fare
 from ..zone import ZipCode
 from utils.logger import logger
 from ..journey import WeeklyJourney
+from utils.util import chunk_generator
 
 logger = logger('INFO', __name__)
 
@@ -14,7 +15,7 @@ class WeeklyFareCalculator(Fare):
     def __init__(self):
         super().__init__()
 
-    def __calculate_weekly_fare(self, journey: list, total_fare: int) -> int:
+    def __calculate_weekly_fare(self, journey: list, total_fare: int, week_capped: bool) -> list:
         """A __calculate_fare private method weekly - Use case 2.
 
         Args:
@@ -23,14 +24,13 @@ class WeeklyFareCalculator(Fare):
         """
 
         try:
+            if week_capped:
+                return [total_fare, week_capped]
+
             day_final_fare = 0
             # * Extracting day journey part
             day, day_fare, from_z, to_z = WeeklyJourney(
                 journey).get_journey_parts()
-
-            # * Weekly capping pass...
-            if total_fare >= self.zone_price[from_z][self.CAPTURE_WEEKLY_CAPPING]:
-                return total_fare
 
             # * Check for day capping
             if from_z == to_z:
@@ -40,9 +40,11 @@ class WeeklyFareCalculator(Fare):
                 day_final_fare = day_fare
 
                 if total_fare + day_final_fare > self.zone_price[from_z][self.CAPTURE_WEEKLY_CAPPING]:
-                    return self.zone_price[from_z][self.CAPTURE_WEEKLY_CAPPING]
+                    return [self.zone_price[from_z][self.CAPTURE_WEEKLY_CAPPING], True]
                 else:
-                    return total_fare + day_final_fare
+                    logger.debug(
+                        f'{day} total_fare {total_fare} day_final_fare {day_final_fare} add {total_fare + day_final_fare}')
+                    return [total_fare + day_final_fare, False]
             else:
                 zipcode = ZipCode().get_journey_zipcode(from_z, to_z)
 
@@ -52,21 +54,31 @@ class WeeklyFareCalculator(Fare):
                 day_final_fare = day_fare
 
                 if total_fare + day_final_fare > self.zone_price[zipcode][self.CAPTURE_WEEKLY_CAPPING]:
-                    return self.zone_price[zipcode][self.CAPTURE_WEEKLY_CAPPING]
+                    return [self.zone_price[zipcode][self.CAPTURE_WEEKLY_CAPPING], True]
                 else:
-                    return total_fare + day_final_fare
+                    logger.debug(
+                        f'{day} before total_fare {total_fare} after {total_fare + day_final_fare}')
+                    return [total_fare + day_final_fare, False]
         except Exception as error:
             raise error
 
     def get_weekly_fare(self, journies: list) -> int:
         try:
             logger.info('## daily journies: %s', journies)
-            total_fare = 0
-            for journey in journies:
-                total_fare = self.__calculate_weekly_fare(journey, total_fare)
-            logger.info(
-                '## Total weekly consolidated fare for the above journies: %s', total_fare)
+            total_fare = 0  # * Across all the weeks
+            weekly_journies = list(chunk_generator(journies, 7))
+            # pdb.set_trace()
+            logger.debug(f'## Weekly journies split {weekly_journies}')
+
+            for week_chunk in weekly_journies:
+                weekly_fare = 0
+                week_capped = False  # * Tracking if the week capping for any zipcode is reached or not.
+                for journey in week_chunk:
+                    weekly_fare, week_capped = self.__calculate_weekly_fare(journey, weekly_fare, week_capped)
+                logger.info(
+                    '## Total weekly consolidated fare for the above journies: %s', weekly_fare)
+                total_fare += weekly_fare
             return total_fare
         except Exception as error:
-            logger.exception(error)
+            logger.exception(error.message)
             raise error
