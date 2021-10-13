@@ -29,7 +29,7 @@ To test the module, please tick the dependencies:
 1: python 3.8.5 + pipenv as dependency manager
 
 2: Checkout to the project root directory:
-```cd . && pipenv install```
+`cd . && pipenv install`
 
 3: Either to test daily or weekly fare calculators the inputs can be alter here: `tests/test_fare_calcualor.py`
 
@@ -56,3 +56,22 @@ The outputs can be realize as follows:
 > TODO: Safety and Dependency checks since pre-commit is not configured.
 
 ## Feedback
+
+Thanks for the feedback. Please find the assetion response as follows:
+
+1: _tests assertions are invalid (i.e not passing the sample tests given in the problem statement)_
+
+I concede this statement and has made changes to `src/fare_calculators/fare.py`.
+However as per the test case 1 provided in the problem statement (for daily fare) The output realized is _95_. PFA
+![tests_results](./tests/results/assets/images/use_case1_daily.png)
+
+As mention that daily cap reaches in the second last trip from zone 1 to zone 1, whose daily cap limit is 100. Contrasting to the problem statement doc where the daily limit is reached at the last trip (1-2 with capping 120) - so the output realized is 95 after the corrections. thx
+
+2: _Implementation gap between daily fare and weekly fare._
+
+Yes, I dwell down and find to calculate accorss the weeks. I pushed the changes for the same. On getting more insights i found that the output is coming to 600. PFA
+![tests_results](./tests/results/assets/images/use_case2_weekly.png)
+
+As shows the above pic, the weekly cap reached during second last trip (1-1, with weekly capping of 500) thus first week capping comes out be 500 instead of 600. On adding the next week fare [100] it comes out to be 600 not 700 as the final output. thx
+
+> To generate the above DEBUG logs please change `pytest.ini` log_levels to **DEBUG** from **INFO** with markers as mention above
