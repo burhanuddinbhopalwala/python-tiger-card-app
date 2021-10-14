@@ -14,7 +14,7 @@ class DailyFareCalculator(Fare):
     def __init__(self):
         super().__init__()
 
-    def __calculate_day_fare(self, journey: list, total_fare: int) -> int:
+    def __calculate_day_fare(self, journey: list, total_fare: int, longest_route: int) -> list:
         """A __calculate_fare private method day - Use case 1.
 
         Args:
@@ -36,19 +36,28 @@ class DailyFareCalculator(Fare):
 
             # * finding the peak/non_peak hour price
             if from_z == to_z:
+                # * Check for the longest route for daily capping
+                if longest_route == 0:
+                    longest_route = from_z
+
                 # * Check for daily capping
                 total_fare += self.zone_price[from_z][peak_price_applicable]
                 logger.debug(
                     f'## Current total_fare  {total_fare} before travelling #{from_z}-#{to_z}')
                 logger.debug(
                     f'Capping for zone #{from_z}-#{to_z} is #{self.zone_price[from_z][self.CAPTURE_DAY_CAPPING]}')
-                if total_fare > self.zone_price[from_z][self.CAPTURE_DAY_CAPPING]:
+                if total_fare > self.zone_price[longest_route][self.CAPTURE_DAY_CAPPING]:
                     total_fare -= self.zone_price[from_z][peak_price_applicable]
                     total_fare += self.DEFAULT_CAPPING_FARE
                 logger.debug(f'Final total fare after travelling zone #{from_z}-#{to_z} {total_fare}')
-                return total_fare
+                return [total_fare, longest_route]
             else:
+
                 zipcode = ZipCode().get_journey_zipcode(from_z, to_z)
+
+                # * Check for the longest route for daily capping
+                if any([longest_route == 0, zipcode > longest_route]):
+                    longest_route = zipcode
 
                 # * Check for daily capping
                 logger.debug(
@@ -56,11 +65,11 @@ class DailyFareCalculator(Fare):
                 logger.debug(
                     f'Capping for zone #{from_z}-#{to_z} is #{self.zone_price[zipcode][self.CAPTURE_DAY_CAPPING]}')
                 total_fare += self.zone_price[zipcode][peak_price_applicable]
-                if total_fare > self.zone_price[zipcode][self.CAPTURE_DAY_CAPPING]:
+                if total_fare > self.zone_price[longest_route][self.CAPTURE_DAY_CAPPING]:
                     total_fare -= self.zone_price[zipcode][peak_price_applicable]
                     total_fare += self.DEFAULT_CAPPING_FARE
                 logger.debug(f'Final total fare after travelling zone #{from_z}-#{to_z} {total_fare}')
-                return total_fare
+                return [total_fare, longest_route]
 
         except Exception as error:
             raise error
@@ -69,13 +78,14 @@ class DailyFareCalculator(Fare):
         try:
             logger.info('## journies: %s', journies)
             total_fare = 0
+            longest_route = 0  # * Eqv to None
             for journey in journies:
-                total_fare = self.__calculate_day_fare(journey, total_fare)
+                total_fare, longest_route = self.__calculate_day_fare(journey, total_fare, longest_route)
             logger.info(
                 '## Total consolidated fare for the above journies: %s', total_fare)
             return total_fare
         except Exception as error:
-            logger.exception(error.message)
+            logger.exception(error)
             raise error
 
 
