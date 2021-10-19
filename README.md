@@ -36,10 +36,14 @@ To test the module, please tick the dependencies:
 4: Finally to run the module please issue any of the commands.
 <br>**integrationtest: is the combine daily + weekly fare calculator**
 
+<br>**dailyfareEACHtest: New usecase journey as individual stream(s) fare**
+<br>Refer: `tests/test_fare_calculator.py:48`
+
 ```bash
 pipenv run python -m pytest tests/ -m dailyfaretest
 pipenv run python -m pytest tests/ -m weeklyfaretest
 pipenv run python -m pytest tests/ -m integrationtest
+pipenv run python -m pytest tests/ -m dailyfareEACHtest
 ```
 
 ## Outputs
@@ -77,6 +81,7 @@ As shows the above pic, the weekly cap reached during second last trip (1-1, wit
 ## Fix after Feedback
 
 Fix is to missing a constraints as per the problem statment stat as:
+
 <p></p>The cap that is applicable for a day is based on the farthest journey in a day. For example, if a
 few journeys are within zone 1 and a single journey is between zone 1 & 2, then the daily cap
 applicable will be the one for zone 1 - 2. The first example later in the document illustrates the
@@ -90,5 +95,9 @@ Test case 1 daily output after revision realized to be 120.
 
 Test case 2 weekly output after fix realized to be 700.
 ![test_case2](./tests/results/assets/images/fix2_usecase2.png)
+
+Test case 3 journey stream (one journey at a time) output realized to as dict<br>
+`{'journey*#1': 35, 'journey*#2': 25, 'journey*#3': 25, 'journey*#4': 30, 'journey\_#5': 5, 'total_fare': 120}`
+![test_case2](./tests/results/assets/images/use_case3_daily_each.png)
 
 > To generate the above DEBUG logs please change `pytest.ini` log_levels to **DEBUG** from **INFO** with markers as mention above

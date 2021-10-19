@@ -23,6 +23,9 @@ class DailyFareCalculator(Fare):
         """
 
         try:
+            # * Orignal fare
+            fare = total_fare
+
             # * Extracting journey part
             day, time, from_z, to_z = DailyJourney(
                 journey).get_journey_parts()
@@ -50,7 +53,7 @@ class DailyFareCalculator(Fare):
                     total_fare -= self.zone_price[from_z][peak_price_applicable]
                     total_fare += self.DEFAULT_CAPPING_FARE
                 logger.debug(f'Final total fare after travelling zone #{from_z}-#{to_z} {total_fare}')
-                return [total_fare, longest_route]
+                return [total_fare, longest_route, total_fare - fare]
             else:
 
                 zipcode = ZipCode().get_journey_zipcode(from_z, to_z)
@@ -69,7 +72,7 @@ class DailyFareCalculator(Fare):
                     total_fare -= self.zone_price[zipcode][peak_price_applicable]
                     total_fare += self.DEFAULT_CAPPING_FARE
                 logger.debug(f'Final total fare after travelling zone #{from_z}-#{to_z} {total_fare}')
-                return [total_fare, longest_route]
+                return [total_fare, longest_route, total_fare - fare]
 
         except Exception as error:
             raise error
@@ -80,7 +83,7 @@ class DailyFareCalculator(Fare):
             total_fare = 0
             longest_route = 0  # * Eqv to None
             for journey in journies:
-                total_fare, longest_route = self.__calculate_day_fare(journey, total_fare, longest_route)
+                total_fare, longest_route, _ = self.__calculate_day_fare(journey, total_fare, longest_route)
             logger.info(
                 '## Total consolidated fare for the above journies: %s', total_fare)
             return total_fare
@@ -88,6 +91,30 @@ class DailyFareCalculator(Fare):
             logger.exception(error)
             raise error
 
+    def get_day_with_each_fare(self, journies: list) -> int:
+        """Use case 3: Journey as stream - each fare."""
+        try:
+            logger.info('## journies: %s', journies)
+            total_fare = 0
+            longest_route = 0  # * Eqv to None
+
+            all_fares = []
+            all_fares_dict = {}
+            count = 1
+            for journey in journies:
+                total_fare, longest_route, fare = self.__calculate_day_fare(journey, total_fare, longest_route)
+                all_fares.append(fare)
+                all_fares_dict[f'journey_#{count}'] = fare
+                count = count + 1
+            logger.info(
+                '## Total consolidated fare for the above journies: %s', total_fare)
+            all_fares.append(total_fare)
+            all_fares_dict['total_fare'] = total_fare
+            logger.info(f'## ALL FARES #{all_fares_dict}')
+            return all_fares
+        except Exception as error:
+            logger.exception(error)
+            raise error
 
 # if __name__ == '__main__':
 #     fc = FareCalculator()
