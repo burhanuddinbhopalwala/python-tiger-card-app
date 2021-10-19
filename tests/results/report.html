@@ -243,7 +243,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>report.html</h1>
-    <p>Report generated on 14-Oct-2021 at 11:46:45 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <p>Report generated on 19-Oct-2021 at 14:59:00 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -262,8 +262,8 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Python</td>
         <td>3.8.5</td></tr></table>
     <h2>Summary</h2>
-    <p>2 tests ran in 0.14 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">2 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>3 tests ran in 0.15 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">3 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -277,13 +277,54 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_fare_calculator.py::TestJourneyFare::test_day_journies_each_fare</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:97 ## journies: [[&#x27;Monday&#x27;, 10.2, 2, 1], [&#x27;Monday&#x27;, 10.45, 1, 1], [&#x27;Monday&#x27;, 16.15, 1, 1], [&#x27;Monday&#x27;, 18.15, 1, 1], [&#x27;Monday&#x27;, 19.0, 1, 2]]
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:66 ## Current total_fare  0 before travelling #2-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:68 Capping for zone #2-#1 is #120
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:74 Final total fare after travelling zone #2-#1 35
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:48 ## Current total_fare  60 before travelling #1-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:50 Capping for zone #1-#1 is #100
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:55 Final total fare after travelling zone #1-#1 60
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:48 ## Current total_fare  85 before travelling #1-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:50 Capping for zone #1-#1 is #100
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:55 Final total fare after travelling zone #1-#1 85
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:48 ## Current total_fare  115 before travelling #1-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:50 Capping for zone #1-#1 is #100
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:55 Final total fare after travelling zone #1-#1 115
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:66 ## Current total_fare  115 before travelling #1-#2
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:68 Capping for zone #1-#2 is #120
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:74 Final total fare after travelling zone #1-#2 120
+INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:109 ## Total consolidated fare for the above journies: 120
+INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:113 ## ALL FARES #{&#x27;journey_#1&#x27;: 35, &#x27;journey_#2&#x27;: 25, &#x27;journey_#3&#x27;: 25, &#x27;journey_#4&#x27;: 30, &#x27;journey_#5&#x27;: 5, &#x27;total_fare&#x27;: 120}<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
           <td class="col-name">tests/test_fare_calculator.py::TestJourneyFare::test_day_journies_fare</td>
           <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:79 ## journies: [[&#x27;Monday&#x27;, 10.2, 2, 1], [&#x27;Monday&#x27;, 10.45, 1, 1], [&#x27;Monday&#x27;, 16.15, 1, 1], [&#x27;Monday&#x27;, 18.15, 1, 1], [&#x27;Monday&#x27;, 19.0, 1, 2]]
-INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:84 ## Total consolidated fare for the above journies: 120<br/></div></td></tr></tbody>
+            <div class="log"> -------------------------------Captured log call-------------------------------- <br/>INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:82 ## journies: [[&#x27;Monday&#x27;, 10.2, 2, 1], [&#x27;Monday&#x27;, 10.45, 1, 1], [&#x27;Monday&#x27;, 16.15, 1, 1], [&#x27;Monday&#x27;, 18.15, 1, 1], [&#x27;Monday&#x27;, 19.0, 1, 2]]
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:66 ## Current total_fare  0 before travelling #2-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:68 Capping for zone #2-#1 is #120
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:74 Final total fare after travelling zone #2-#1 35
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:48 ## Current total_fare  60 before travelling #1-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:50 Capping for zone #1-#1 is #100
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:55 Final total fare after travelling zone #1-#1 60
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:48 ## Current total_fare  85 before travelling #1-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:50 Capping for zone #1-#1 is #100
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:55 Final total fare after travelling zone #1-#1 85
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:48 ## Current total_fare  115 before travelling #1-#1
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:50 Capping for zone #1-#1 is #100
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:55 Final total fare after travelling zone #1-#1 115
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:66 ## Current total_fare  115 before travelling #1-#2
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:68 Capping for zone #1-#2 is #120
+DEBUG    src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:74 Final total fare after travelling zone #1-#2 120
+INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:87 ## Total consolidated fare for the above journies: 120<br/></div></td></tr></tbody>
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
@@ -293,5 +334,13 @@ INFO     src.fare_calculators.daily_fare_calculator:daily_fare_calculator.py:84 
         <tr>
           <td class="extra" colspan="4">
             <div class="log"> -------------------------------Captured log call-------------------------------- <br/>INFO     src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:75 ## daily journies: [[&#x27;Monday&#x27;, 120, 1, 2], [&#x27;Tuesday&#x27;, 120, 1, 2], [&#x27;Wednesday&#x27;, 120, 1, 2], [&#x27;Thursday&#x27;, 120, 1, 2], [&#x27;Friday&#x27;, 80, 1, 1], [&#x27;Saturday&#x27;, 40, 1, 2], [&#x27;Sunday&#x27;, 40, 1, 2], [&#x27;Monday&#x27;, 100, 1, 2]]
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:79 ## Weekly journies split [[[&#x27;Monday&#x27;, 120, 1, 2], [&#x27;Tuesday&#x27;, 120, 1, 2], [&#x27;Wednesday&#x27;, 120, 1, 2], [&#x27;Thursday&#x27;, 120, 1, 2], [&#x27;Friday&#x27;, 80, 1, 1], [&#x27;Saturday&#x27;, 40, 1, 2], [&#x27;Sunday&#x27;, 40, 1, 2]], [[&#x27;Monday&#x27;, 100, 1, 2]]]
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:67 monday before total_fare 0 after 120.0
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:67 tuesday before total_fare 120.0 after 240.0
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:67 wednesday before total_fare 240.0 after 360.0
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:67 thursday before total_fare 360.0 after 480.0
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:49 friday total_fare 480.0 day_final_fare 80.0 add 560.0
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:67 saturday before total_fare 560.0 after 600.0
 INFO     src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:87 ## Total weekly consolidated fare for the above journies: 600
+DEBUG    src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:67 monday before total_fare 0 after 100.0
 INFO     src.fare_calculators.weekly_fare_calculator:weekly_fare_calculator.py:87 ## Total weekly consolidated fare for the above journies: 100.0<br/></div></td></tr></tbody></table></body></html>
